@@ -24,7 +24,7 @@ async function main() {
 
 async function runForLinux(command) {
     if (fs.existsSync('/etc/alpine-release'))
-        await exec.exec("apt-get install xvfb");
+        await exec.exec("apk add xvfb");
     else
         await exec.exec("sudo apt-get install xvfb");
 
