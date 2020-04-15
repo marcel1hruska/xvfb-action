@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const fs = require('fs');
 
 async function main() {
 
@@ -22,7 +23,10 @@ async function main() {
 }
 
 async function runForLinux(command) {
-    await exec.exec("sudo apt-get install xvfb");
+    if (fs.existsSync('/etc/alpine-release'))
+        await exec.exec("apt-get install xvfb");
+    else
+        await exec.exec("sudo apt-get install xvfb");
 
     try {
         await exec.exec(`xvfb-run --auto-servernum ${command}`);
